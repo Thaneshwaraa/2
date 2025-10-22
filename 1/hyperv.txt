@@ -1,0 +1,7 @@
+
+New-VM -Name "MyVM" -MemoryStartupBytes 2GB -NewVHDPath "C:\VMs\MyVM.vhdx" -NewVHDSizeBytes 40GB -SwitchName "VirtualSwitch"
+
+Set-VMDvdDrive -VMName "MyVM" -Path "C:\ISOs\ubuntu.iso"
+
+
+Start-VM -Name "MyVM"

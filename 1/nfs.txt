@@ -1,0 +1,31 @@
+
+sudo apt update
+sudo apt install nfs-kernel-server nfs-common -y
+
+sudo mkdir -p /srv/nfs/share
+sudo chown nobody:nogroup /srv/nfs/share
+
+echo "Hello from VM1" | sudo tee /srv/nfs/share/hello.txt
+
+
+echo "/srv/nfs/share 192.168.1.106(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports
+
+
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+
+
+
+sudo apt update
+sudo apt install nfs-common -y
+
+
+sudo mkdir -p /mnt/nfs/share
+
+
+sudo mount 192.168.1.105:/srv/nfs/share /mnt/nfs/share
+
+
+ls /mnt/nfs/share
+
+sudo cp myfile.txt /mnt/nfs/share/

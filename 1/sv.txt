@@ -1,0 +1,11 @@
+sudo -s
+fdisk -l
+pvcreate /dev/sdb
+vgcreate demo-vg /dev/sdb
+lvcreate -L 10G -n demo-lv demo-vg
+mkfs.ext4 /dev/demo-vg/demo-lv
+mkdir /mnt/lvm-demo
+mount /dev/demo-vg/demo-lv /mnt/lvm-demo
+lvresize --size +12G ubuntu-vg/ubuntu-lv
+resize2fs /dev/mapper/ubuntu-vg-ubuntu-lv
+df -h

@@ -1,0 +1,30 @@
+# -----------------------------
+# OpenStack (DevStack) Installer
+# -----------------------------
+
+# Update system and install git
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git
+
+# Create stack user
+sudo useradd -s /bin/bash -d /opt/stack -m stack
+echo "stack ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/stack
+
+# Switch to stack user and install DevStack
+sudo su - stack <<'EOF'
+# Clone DevStack
+git clone https://opendev.org/openstack/devstack
+cd devstack
+
+# Create minimal local.conf
+cat > local.conf <<EOL
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=secret
+RABBIT_PASSWORD=secret
+SERVICE_PASSWORD=secret
+EOL
+
+# Run the installer (takes 20–40 minutes)
+./stack.sh
+EOF

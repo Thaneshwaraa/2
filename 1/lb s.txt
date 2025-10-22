@@ -1,0 +1,8 @@
+sudo apt update -y
+sudo apt install -y openvswitch-switch
+sudo ovs-vsctl add-br br0
+sudo ovs-vsctl add-port br0 eth0
+sudo ip link set br0 up
+sudo ip link set eth0 up
+sudo dhclient br0
+sudo ovs-vsctl show
